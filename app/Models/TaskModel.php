@@ -28,6 +28,7 @@ class TaskModel {
     public static function addTask($task): void
     {
         $task['id'] = count(self::$tasks) + 1;
+        $task['created_at'] = date('Y-m-d');
         self::$tasks[] = $task;
     }
 

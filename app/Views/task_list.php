@@ -20,7 +20,6 @@
     <input type="text" name="title" placeholder="Title">
     <input type="text" name="description" placeholder="Description">
     <input type="text" name="status" placeholder="Status">
-    <input type="text" name="created_at" placeholder="Date of creation">
     <button type="submit">Add task</button>
 </form>
 </body>
