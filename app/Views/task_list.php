@@ -7,10 +7,13 @@
 <h1>Task list</h1>
 <ul>
     <?php foreach ($tasks as $task): ?>
-        <strong><?php echo $task['title']; ?></strong><br>
-        Description: <?php echo $task['description']; ?><br>
-        Status: <?php echo $task['status']; ?><br>
-        Date of creation: <?php echo $task['created_at']; ?><br>
+        <li>
+            <strong>ID: <?php echo $task['id']; ?></strong><br>
+            Title: <?php echo $task['title']; ?><br>
+            Description: <?php echo $task['description']; ?><br>
+            Status: <?php echo $task['status']; ?><br>
+            Date of creation: <?php echo $task['created_at']; ?><br>
+        </li>
     <?php endforeach; ?>
 </ul>
 <form method="post" action="/public/index.php">

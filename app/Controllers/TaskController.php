@@ -8,6 +8,7 @@ class TaskController {
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newTask = [
+                'id' => null,
                 'title' => $_POST['title'],
                 'description' => $_POST['description'],
                 'status' => $_POST['status'],
