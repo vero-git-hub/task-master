@@ -19,7 +19,11 @@
 <form method="post" action="/public/index.php">
     <input type="text" name="title" placeholder="Title">
     <input type="text" name="description" placeholder="Description">
-    <input type="text" name="status" placeholder="Status">
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+        <option value="in progress">in progress</option>
+        <option value="completed">completed</option>
+    </select><br>
     <button type="submit">Add task</button>
 </form>
 </body>
