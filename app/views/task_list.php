@@ -43,6 +43,7 @@
                     <p>Description: <?= htmlspecialchars($task['description']) ?></p>
                     <p>Status: <?= htmlspecialchars($task['status']) ?></p>
                     <p>Date of creation: <?= htmlspecialchars($task['created_at']) ?></p>
+                    <a href="/public/index.php?action=edit&taskId=<?= $task['id'] ?>">Edit</a>
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>

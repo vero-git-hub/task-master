@@ -24,4 +24,26 @@ class TaskModel {
 
         $stmt->execute();
     }
+
+    public static function updateTask(int $taskId, array $taskData): void
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare('UPDATE task SET title = :title, description = :description, status = :status WHERE id = :id');
+
+        $stmt->bindParam(':title', $taskData['title']);
+        $stmt->bindParam(':description', $taskData['description']);
+        $stmt->bindParam(':status', $taskData['status']);
+        $stmt->bindParam(':id', $taskId);
+
+        $stmt->execute();
+    }
+
+    public static function getTaskById(int $taskId): array
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare('SELECT * FROM task WHERE id = :id');
+        $stmt->bindParam(':id', $taskId);
+        $stmt->execute();
+        return $stmt->fetch() ?? [];
+    }
 }

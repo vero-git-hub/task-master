@@ -30,4 +30,15 @@ class TaskController {
         exit;
     }
 
+    public function editTask(int $taskId): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            TaskModel::updateTask($taskId, $_POST);
+            header('Location: /public/index.php');
+            exit;
+        }
+
+        $task = TaskModel::getTaskById($taskId);
+        require __DIR__ . '/../views/edit_task.php';
+    }
 }

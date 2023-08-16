@@ -5,10 +5,18 @@ use App\Controllers\TaskController;
 
 $controller = new TaskController();
 
+$action = $_GET['action'] ?? '';
+$taskId = $_GET['taskId'] ?? null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller->createTask();
-} else {
-    $controller->index();
+switch ($action) {
+    case 'edit':
+        if ($taskId) {
+            $controller->editTask($taskId);
+        }
+        break;
+    case 'create':
+        $controller->createTask();
+        break;
+    default:
+        $controller->index();
 }
-
