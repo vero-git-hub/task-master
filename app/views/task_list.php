@@ -4,52 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Master</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Task list</h1>
+    <div class="container mt-5">
+        <h2>Tasks</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($tasks as $task): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($task['id']) ?></td>
+                        <td><?= htmlspecialchars($task['title']) ?></td>
+                        <td><?= htmlspecialchars($task['description']) ?></td>
+                        <td><?= htmlspecialchars($task['status']) ?></td>
+                        <td><?= htmlspecialchars($task['created_at']) ?></td>
+                        <td>
+                            <a href="/public/index.php?action=edit&taskId=<?= $task['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="/public/index.php?action=delete&taskId=<?= $task['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    <form action="/public/index.php?action=add" method="POST">
-        <div>
-            <label for="title">Title:</label>
-            <input type="text" name="title" id="title" required>
-        </div>
-        <div>
-            <label for="description">Description:</label>
-            <input type="text" name="description" id="description">
-        </div>
-        <div>
-            <label for="status">Status:</label>
-            <select name="status" id="status">
-                <option value="in progress">In Progress</option>
-                <option value="completed">Completed</option>
-            </select>
-        </div>
-        <div>
-            <button type="submit">Add Task</button>
-        </div>
-    </form>
-
-    <hr>
-
-    <h2>Tasks</h2>
-    <ul>
-        <?php if (empty($tasks)): ?>
-            <li>The task list is empty.</li>
-        <?php else: ?>
-            <?php foreach ($tasks as $task): ?>
-                <li>
-                    <strong>ID: <?= $task['id']; ?></strong><br>
-                    <p>Title: <?= htmlspecialchars($task['title']) ?></p>
-                    <p>Description: <?= htmlspecialchars($task['description']) ?></p>
-                    <p>Status: <?= htmlspecialchars($task['status']) ?></p>
-                    <p>Date of creation: <?= htmlspecialchars($task['created_at']) ?></p>
-                    <a href="/public/index.php?action=edit&taskId=<?= $task['id'] ?>">Edit</a>
-                    <form action="/public/index.php?action=delete&taskId=<?= $task['id'] ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?');">
-                        <button type="submit">Delete</button>
-                    </form>
-                </li>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </ul>
+        <h3>Add new task</h3>
+        <form action="/public/index.php?action=add" method="POST">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" rows="4" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="in progress">in progress</option>
+                    <option value="completed">completed</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success">Add Task</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
