@@ -3,6 +3,10 @@ require_once __DIR__ . '/../autoload.php';
 
 use App\Controllers\TaskController;
 
+if (preg_match('/\.(?:css|js|jpg|png|gif)$/', $_SERVER["REQUEST_URI"])) {
+    return false;
+}
+
 $controller = new TaskController();
 
 $action = $_GET['action'] ?? '';

@@ -1,0 +1,9 @@
+.add-task-btn {
+    background-color: transparent;
+    border: none;
+}
+
+.plus-icon {
+    font-size: 24px;
+    color: green;
+}
