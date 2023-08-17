@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 
-use App\Database;
+use app\db\Database;
 use PDO;
 
 class TaskModel {
@@ -36,15 +36,6 @@ class TaskModel {
         $stmt->bindParam(':id', $taskId);
 
         $stmt->execute();
-    }
-
-    public static function getTaskById(int $taskId): array
-    {
-        $db = Database::getConnection();
-        $stmt = $db->prepare('SELECT * FROM task WHERE id = :id');
-        $stmt->bindParam(':id', $taskId);
-        $stmt->execute();
-        return $stmt->fetch() ?? [];
     }
 
     public static function deleteTask(int $taskId): void
