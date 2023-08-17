@@ -8,7 +8,7 @@
 <body>
     <h1>Task list</h1>
 
-    <form action="/public/index.php" method="POST">
+    <form action="/public/index.php?action=add" method="POST">
         <div>
             <label for="title">Title:</label>
             <input type="text" name="title" id="title" required>
@@ -44,6 +44,9 @@
                     <p>Status: <?= htmlspecialchars($task['status']) ?></p>
                     <p>Date of creation: <?= htmlspecialchars($task['created_at']) ?></p>
                     <a href="/public/index.php?action=edit&taskId=<?= $task['id'] ?>">Edit</a>
+                    <form action="/public/index.php?action=delete&taskId=<?= $task['id'] ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?');">
+                        <button type="submit">Delete</button>
+                    </form>
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>

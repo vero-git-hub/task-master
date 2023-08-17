@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 use App\Models\TaskModel;
+use JetBrains\PhpStorm\NoReturn;
 
 class TaskController {
     public function index(): void
@@ -30,15 +31,27 @@ class TaskController {
         exit;
     }
 
+    public function showEditForm(int $taskId): void
+    {
+        $task = TaskModel::getTaskById($taskId);
+        require __DIR__ . '/../views/edit_task.php';
+    }
+
     public function editTask(int $taskId): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             TaskModel::updateTask($taskId, $_POST);
             header('Location: /public/index.php');
             exit;
+        } else {
+            $this->showEditForm($taskId);
         }
+    }
 
-        $task = TaskModel::getTaskById($taskId);
-        require __DIR__ . '/../views/edit_task.php';
+    #[NoReturn] public function deleteTask(int $taskId): void
+    {
+        TaskModel::deleteTask($taskId);
+        header('Location: /public/index.php');
+        exit;
     }
 }

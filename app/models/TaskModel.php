@@ -46,4 +46,12 @@ class TaskModel {
         $stmt->execute();
         return $stmt->fetch() ?? [];
     }
+
+    public static function deleteTask(int $taskId): void
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare('DELETE FROM task WHERE id = :id');
+        $stmt->bindParam(':id', $taskId);
+        $stmt->execute();
+    }
 }

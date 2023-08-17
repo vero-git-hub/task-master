@@ -14,8 +14,13 @@ switch ($action) {
             $controller->editTask($taskId);
         }
         break;
-    case 'create':
+    case 'add':
         $controller->createTask();
+        break;
+    case 'delete':
+        if ($taskId) {
+            $controller->deleteTask($taskId);
+        }
         break;
     default:
         $controller->index();
