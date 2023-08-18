@@ -17,17 +17,17 @@
             </button>
         </div>
 
-        <form action="/" method="get" class="mb-4" id="filterForm">
+        <form action="/public/index.php" method="get" class="mb-4" id="filterForm">
             <div class="d-flex">
                 <select name="status" class="form-control w-auto d-inline-block">
                     <?php $currentStatus = $_GET['status'] ?? ''; ?>
                     <option value="" <?= $currentStatus === '' ? 'selected' : ''; ?>>All tasks</option>
-                    <option value="in-progress" <?= $currentStatus === 'in-progress' ? 'selected' : ''; ?>>In progress</option>
+                    <option value="in progress" <?= $currentStatus === 'in progress' ? 'selected' : ''; ?>>In progress</option>
                     <option value="completed" <?= $currentStatus === 'completed' ? 'selected' : ''; ?>>Completed</option>
                 </select>
-                <button type="submit" class="btn btn-primary">Filter</button>
+                <input type="text" name="search" class="form-control ml-2" placeholder="Search..." value="<?= $_GET['search'] ?? '' ?>">
+                <button type="submit" class="btn btn-primary ml-2">Search & Filter</button>
             </div>
-
         </form>
 
         <table class="table table-striped">
@@ -131,19 +131,9 @@
                 </div>
             </div>
         <?php endforeach; ?>
-
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('filterForm').addEventListener('submit', function(event) {
-            if (document.querySelector('[name="status"]').value === "") {
-                event.preventDefault();
-                window.location.href = '/public/index.php';
-            }
-        });
-    </script>
-
 </body>
 </html>

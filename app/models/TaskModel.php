@@ -6,22 +6,29 @@ use PDO;
 
 class TaskModel {
 
-    public static function getAllTasks($status = null): array
+    public static function getAllTasks($status = null, $search = null): array
     {
         $db = Database::getConnection();
         $sql = "SELECT * FROM task";
+        $params = [];
+        $conditions = [];
 
         if ($status) {
-            $sql .= " WHERE status = :status";
+            $conditions[] = "status = :status";
+            $params[':status'] = $status;
+        }
+        if ($search) {
+            $conditions[] = "(title LIKE :searchTitle OR description LIKE :searchDescription)";
+            $params[':searchTitle'] = '%' . $search . '%';
+            $params[':searchDescription'] = '%' . $search . '%';
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(" AND ", $conditions);
         }
 
         $query = $db->prepare($sql);
-
-        if ($status) {
-            $query->bindParam(':status', $status);
-        }
-
-        $query->execute();
+        $query->execute($params);
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 

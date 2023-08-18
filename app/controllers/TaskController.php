@@ -8,7 +8,8 @@ class TaskController {
     public function index(): void
     {
         $status = $_GET['status'] ?? null;
-        $tasks = TaskModel::getAllTasks($status);
+        $search = $_GET['search'] ?? null;
+        $tasks = TaskModel::getAllTasks($status, $search);
         require __DIR__ . '/../views/task_list.php';
     }
 
