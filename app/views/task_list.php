@@ -16,6 +16,20 @@
                 <i class="fas fa-plus-circle plus-icon"></i>
             </button>
         </div>
+
+        <form action="/" method="get" class="mb-4" id="filterForm">
+            <div class="d-flex">
+                <select name="status" class="form-control w-auto d-inline-block">
+                    <?php $currentStatus = $_GET['status'] ?? ''; ?>
+                    <option value="" <?= $currentStatus === '' ? 'selected' : ''; ?>>All tasks</option>
+                    <option value="in-progress" <?= $currentStatus === 'in-progress' ? 'selected' : ''; ?>>In progress</option>
+                    <option value="completed" <?= $currentStatus === 'completed' ? 'selected' : ''; ?>>Completed</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+
+        </form>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -66,7 +80,7 @@
                             <div class="form-group">
                                 <label for="status">Status:</label>
                                 <select name="status" id="status" class="form-control">
-                                    <option value="in-progress">in progress</option>
+                                    <option value="in progress">in progress</option>
                                     <option value="completed">completed</option>
                                 </select>
                             </div>
@@ -92,7 +106,6 @@
                         </div>
                         <form action="/public/index.php?action=edit&taskId=<?= $task['id'] ?>" method="post">
                             <div class="modal-body">
-                                <!-- Форма редактирования -->
                                 <div class="form-group">
                                     <label for="title">Title:</label>
                                     <input type="text" name="title" id="title" class="form-control" required value="<?= htmlspecialchars($task['title']) ?>">
@@ -104,7 +117,7 @@
                                 <div class="form-group">
                                     <label for="status">Status:</label>
                                     <select name="status" id="status" class="form-control">
-                                        <option value="in-progress" <?= $task['status'] === 'in-progress' ? 'selected' : '' ?>>in progress</option>
+                                        <option value="in progress" <?= $task['status'] === 'in-progress' ? 'selected' : '' ?>>in progress</option>
                                         <option value="completed" <?= $task['status'] === 'completed' ? 'selected' : '' ?>>completed</option>
                                     </select>
                                 </div>
@@ -123,5 +136,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('filterForm').addEventListener('submit', function(event) {
+            if (document.querySelector('[name="status"]').value === "") {
+                event.preventDefault();
+                window.location.href = '/public/index.php';
+            }
+        });
+    </script>
+
 </body>
 </html>

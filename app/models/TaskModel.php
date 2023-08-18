@@ -6,11 +6,23 @@ use PDO;
 
 class TaskModel {
 
-    public static function getAllTasks(): array
+    public static function getAllTasks($status = null): array
     {
-        $stmt = Database::getConnection()->prepare("SELECT * FROM task");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $db = Database::getConnection();
+        $sql = "SELECT * FROM task";
+
+        if ($status) {
+            $sql .= " WHERE status = :status";
+        }
+
+        $query = $db->prepare($sql);
+
+        if ($status) {
+            $query->bindParam(':status', $status);
+        }
+
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function addTask(array $taskData): void

@@ -7,8 +7,9 @@ use JetBrains\PhpStorm\NoReturn;
 class TaskController {
     public function index(): void
     {
-        $tasks = TaskModel::getAllTasks();
-        include(__DIR__ . '/../views/task_list.php');
+        $status = $_GET['status'] ?? null;
+        $tasks = TaskModel::getAllTasks($status);
+        require __DIR__ . '/../views/task_list.php';
     }
 
     public function createTask(): void
