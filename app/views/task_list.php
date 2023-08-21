@@ -43,6 +43,7 @@
                         </span>
                     </th>
                     <th>Actions</th>
+                    <th>Done</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,6 +57,11 @@
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editTaskModal<?= $task['id'] ?>">Edit</button>
                             <a href="/public/index.php?action=delete&taskId=<?= $task['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                        <td>
+                            <?php if ($task['status'] === 'in progress'): ?>
+                                <input type="checkbox" class="task-completed" data-task-id="<?= $task['id'] ?>">
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -139,19 +145,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('dateSort').addEventListener('click', function() {
-            let currentUrl = new URL(window.location.href);
-            let currentSortOrder = currentUrl.searchParams.get('sortOrder');
-
-            if (!currentSortOrder || currentSortOrder === 'asc') {
-                currentUrl.searchParams.set('sortOrder', 'desc');
-            } else {
-                currentUrl.searchParams.set('sortOrder', 'asc');
-            }
-
-            window.location.href = currentUrl.toString();
-        });
-    </script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

@@ -66,4 +66,12 @@ class TaskModel {
         $stmt->bindParam(':id', $taskId);
         $stmt->execute();
     }
+
+    public static function markAsCompleted(int $taskId): void
+    {
+        $db = Database::getConnection();
+        $sql = "UPDATE task SET status = 'completed' WHERE id = :id";
+        $query = $db->prepare($sql);
+        $query->execute([':id' => $taskId]);
+    }
 }

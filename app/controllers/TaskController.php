@@ -49,4 +49,11 @@ class TaskController {
         header('Location: /public/index.php');
         exit;
     }
+
+    #[NoReturn] public function markTaskAsCompleted(int $taskId): void
+    {
+        TaskModel::markAsCompleted($taskId);
+        header('Location: /public/index.php');
+        exit;
+    }
 }
