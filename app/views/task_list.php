@@ -26,7 +26,7 @@
                     <option value="completed" <?= $currentStatus === 'completed' ? 'selected' : ''; ?>>Completed</option>
                 </select>
                 <input type="text" name="search" class="form-control ml-2" placeholder="Search..." value="<?= $_GET['search'] ?? '' ?>">
-                <button type="submit" class="btn btn-primary ml-2">Search & Filter</button>
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
             </div>
         </form>
 
@@ -37,7 +37,11 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Date</th>
+                    <th>Date
+                        <span id="dateSort" style="cursor: pointer;">
+                            &#8597;
+                        </span>
+                    </th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -135,5 +139,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('dateSort').addEventListener('click', function() {
+            let currentUrl = new URL(window.location.href);
+            let currentSortOrder = currentUrl.searchParams.get('sortOrder');
+
+            if (!currentSortOrder || currentSortOrder === 'asc') {
+                currentUrl.searchParams.set('sortOrder', 'desc');
+            } else {
+                currentUrl.searchParams.set('sortOrder', 'asc');
+            }
+
+            window.location.href = currentUrl.toString();
+        });
+    </script>
 </body>
 </html>

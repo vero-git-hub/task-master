@@ -6,7 +6,7 @@ use PDO;
 
 class TaskModel {
 
-    public static function getAllTasks($status = null, $search = null): array
+    public static function getAllTasks($status = null, $search = null, $sortOrder = 'asc'): array
     {
         $db = Database::getConnection();
         $sql = "SELECT * FROM task";
@@ -26,6 +26,8 @@ class TaskModel {
         if (!empty($conditions)) {
             $sql .= " WHERE " . implode(" AND ", $conditions);
         }
+
+        $sql .= " ORDER BY created_at " . ($sortOrder === 'asc' ? 'ASC' : 'DESC');
 
         $query = $db->prepare($sql);
         $query->execute($params);

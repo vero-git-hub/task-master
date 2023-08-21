@@ -9,7 +9,8 @@ class TaskController {
     {
         $status = $_GET['status'] ?? null;
         $search = $_GET['search'] ?? null;
-        $tasks = TaskModel::getAllTasks($status, $search);
+        $sortOrder = $_GET['sortOrder'] ?? 'asc';
+        $tasks = TaskModel::getAllTasks($status, $search, $sortOrder);
         require __DIR__ . '/../views/task_list.php';
     }
 
