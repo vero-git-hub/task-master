@@ -6,11 +6,32 @@ use PDO;
 
 class TaskModel {
 
-    public static function getAllTasks(): array
+    public static function getAllTasks($status = null, $search = null, $sortOrder = 'asc'): array
     {
-        $stmt = Database::getConnection()->prepare("SELECT * FROM task");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $db = Database::getConnection();
+        $sql = "SELECT * FROM task";
+        $params = [];
+        $conditions = [];
+
+        if ($status) {
+            $conditions[] = "status = :status";
+            $params[':status'] = $status;
+        }
+        if ($search) {
+            $conditions[] = "(title LIKE :searchTitle OR description LIKE :searchDescription)";
+            $params[':searchTitle'] = '%' . $search . '%';
+            $params[':searchDescription'] = '%' . $search . '%';
+        }
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $sql .= " ORDER BY created_at " . ($sortOrder === 'asc' ? 'ASC' : 'DESC');
+
+        $query = $db->prepare($sql);
+        $query->execute($params);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function addTask(array $taskData): void
@@ -44,5 +65,13 @@ class TaskModel {
         $stmt = $db->prepare('DELETE FROM task WHERE id = :id');
         $stmt->bindParam(':id', $taskId);
         $stmt->execute();
+    }
+
+    public static function markAsCompleted(int $taskId): void
+    {
+        $db = Database::getConnection();
+        $sql = "UPDATE task SET status = 'completed' WHERE id = :id";
+        $query = $db->prepare($sql);
+        $query->execute([':id' => $taskId]);
     }
 }

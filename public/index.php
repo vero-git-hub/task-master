@@ -26,6 +26,8 @@ switch ($action) {
             $controller->deleteTask($taskId);
         }
         break;
+    case 'markAsCompleted':
+        $controller->markTaskAsCompleted((int)$_GET['taskId']);
     default:
         $controller->index();
 }

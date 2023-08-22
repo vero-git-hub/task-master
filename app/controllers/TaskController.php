@@ -7,8 +7,11 @@ use JetBrains\PhpStorm\NoReturn;
 class TaskController {
     public function index(): void
     {
-        $tasks = TaskModel::getAllTasks();
-        include(__DIR__ . '/../views/task_list.php');
+        $status = $_GET['status'] ?? null;
+        $search = $_GET['search'] ?? null;
+        $sortOrder = $_GET['sortOrder'] ?? 'asc';
+        $tasks = TaskModel::getAllTasks($status, $search, $sortOrder);
+        require __DIR__ . '/../views/task_list.php';
     }
 
     public function createTask(): void
@@ -43,6 +46,13 @@ class TaskController {
     #[NoReturn] public function deleteTask(int $taskId): void
     {
         TaskModel::deleteTask($taskId);
+        header('Location: /public/index.php');
+        exit;
+    }
+
+    #[NoReturn] public function markTaskAsCompleted(int $taskId): void
+    {
+        TaskModel::markAsCompleted($taskId);
         header('Location: /public/index.php');
         exit;
     }
